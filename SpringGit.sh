@@ -1,6 +1,6 @@
 # pull
 
-rm *~
+sudo rm *~
 
 git status
 
