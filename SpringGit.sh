@@ -2,6 +2,8 @@
 
 git status
 
+git add -A
+
 git pull origin master
 
 if [ "$1" == "" ]; then
