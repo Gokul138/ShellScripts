@@ -11,13 +11,13 @@ echo "cleaning"
 sudo apt-get clean
 
 echo "installing CV libraries, GHGUI libraries and CMake"
-sudo apt-get install build-essential libcv-dev libhighgui-dev cmake
+sudo apt-get -q -y install build-essential libcv-dev libhighgui-dev cmake
 
 echo "cleaning"
 sudo apt-get clean
 
 echo "installing python-software-properties"
-sudo apt-get install python-software-properties
+sudo apt-get -q -y install python-software-properties
 
 echo "adding git-core repository"
 sudo add-apt-repository ppa:git-core/ppa
@@ -26,7 +26,7 @@ echo "updating local repo"
 sudo apt-get update
 
 echo "installing git"
-sudo apt-get install git
+sudo apt-get -q -y install git
 
 echo "cleaning"
 sudo apt-get clean
@@ -41,7 +41,7 @@ echo "generating ssh key"
 sudo ssh-keygen -t rsa -C "$email"
 
 echo "Installing xclip"
-sudo apt-get install xclip
+sudo apt-get -q -y install xclip
 
 xclip -sel clip < ~/.ssh/id_rsa.pub
 
