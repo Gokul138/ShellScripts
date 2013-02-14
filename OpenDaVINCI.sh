@@ -1,14 +1,59 @@
-echo "Hello Welcome, Any errors contact gusevugo@student.gu.se"
+# Author Gokul S. Evuri (gokul@evuri.com)
 
-echo "****Read the Following carefully and do as so for a successful installation****"
-echo "please enter the following and when asked for confirmation to install any package [Y/N] please press \"Y\" and [ENTER]"
+echo "$(tput bold)$(tput setaf 4)Hello Welcome, Any errors contact gusevugo@student.gu.se"
 
-echo "Now, enter your group. example:group-1, and press [ENTER] key"
+echo "$(tput bold)$(tput setaf 4)****Read the Following carefully and do as so for a successful installation****$(tput sgr0)"
+echo "$(tput bold)Enter the following and when asked for confirmation to install any package [Y/N] please press \"Y\" and [ENTER]"
+
+echo "$(tput bold)$(tput setaf 4)Now, enter your group. example:group-1, and press [ENTER] key"
 read group
 
-echo "And Elease enter your registered email on git, example:your_email@youremail.com followed by [ENTER] key"
+echo "$(tput bold)$(tput setaf 4)And Elease enter your registered email on git, example:your_email@youremail.com followed by [ENTER] key$(tput sgr0)"
 
 read email
+
+#ask user if every thing entered correct or want to enter it again?
+echo "$(tput bold)Have you entered your group name and email correctly? press /"[Y/N]/" and then [ENTER] key" 
+read boolYN
+
+if [[ $boolYN = 'Y' || $boolYN = 'y'  ]]; then
+
+#use the following functions in new windows
+#super component function
+#other components functions
+
+start_supercomponent (){
+ cd /opt/msv/"$group"/
+ ./supercomponent --cid=111
+}
+
+export -f start_supercomponent
+
+start_testsensorboardsender (){
+ cd /opt/msv/"$group"/
+ ./testsensorboardsender --cid=111
+}
+
+export -f start_testsensorboardsender
+
+start_sensorboard (){
+ cd /opt/msv/"$group"/
+ ./sensorboard --cid=111
+}
+
+export -f start_sensorboard
+
+#start_other_component (){}
+
+#export -f start_other_component
+
+start_test (){
+gnome-terminal --execute bash -c "start_supercomponent;bash"  #execute bash in new terminal
+gnome-terminal --execute bash -c "start_testsensorboardsender;bash"
+gnome-terminal --execute bash -c "start_sensorboard;bash"
+}
+
+export -f start_test # export function start_test
 
 cd 
 
@@ -28,7 +73,7 @@ echo "installing CV libraries, GHGUI libraries and CMake"
 sudo apt-get -q -y install build-essential libcv-dev libhighgui-dev cmake
 
 echo "cleaning"
-sudo apt-get clean
+sudo apt-get -q -y clean
 
 echo "installing python-software-properties"
 sudo apt-get -q -y install python-software-properties
@@ -51,7 +96,7 @@ sudo apt-get -q -y autoremove
 echo "$(tput bold)$(tput setaf 4)******READ THE FOLLOWING******$(tput sgr0)"
 echo "generating ssh key"
 echo "$(tput bold)Just Press [ENTER] key during the next step"
-echo "$(tput bold)If asks for \"Overwrite (y/n)\" press \"Y\" and then [ENTER] key twice$(tput sgr0)"
+echo "$(tput bold)If asks for \"Overwrite (y/n)\" press \"Y\" and then [ENTER] key thrice.$(tput sgr0)"
 sudo ssh-keygen -t rsa -C "$email"
 
 echo "Installing xclip"
@@ -118,12 +163,22 @@ sudo mkdir /opt/msv/"$group"
 
 cd "$group"/sources/OpenDaVINCI-msv && sudo mkdir build
 
-sudo cmake -DCMAKE_INSTALL_PREFIX=/opt/msv/"$group"
+echo "Generating cmake files"
+sudo cmake -DCMAKE_INSTALL_PREFIX=/opt/msv/"$group"/
 
+echo "make all"
 sudo make all
 
+echo "Testing the system"
 sudo make test
 
+echo "Installing the system"
 sudo make install
 
-echo "next implementation with demo starting supercomponent and fixing functional checks"
+#echo "next implementation with demo starting supercomponent and fixing functional checks"
+
+start_test
+
+else echo "please run the script again";
+
+fi
