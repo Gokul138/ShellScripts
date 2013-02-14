@@ -10,6 +10,8 @@ echo "And Elease enter your registered email on git, example:your_email@youremai
 
 read email
 
+cd 
+
 echo "updating"
 sudo apt-get update
 
