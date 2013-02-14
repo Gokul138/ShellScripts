@@ -48,18 +48,22 @@ sudo apt-get -q -y clean
 echo "autoremove"
 sudo apt-get -q -y autoremove
 
-
+echo "$(tput bold)$(tput setaf 4)******READ THE FOLLOWING******$(tput sgr0)"
 echo "generating ssh key"
+echo "$(tput bold)Just Press [ENTER] key during the next step"
+echo "$(tput bold)If asks for \"Overwrite (y/n)\" press \"Y\" and then [ENTER] key twice$(tput sgr0)"
 sudo ssh-keygen -t rsa -C "$email"
 
 echo "Installing xclip"
 sudo apt-get -q -y install xclip
 
-sudo xclip -sel clip < ~/.ssh/id_rsa.pub
+cd 
 
-sudo ssh-add ~/.ssh/id_rsa
+sudo xclip -sel clip < ./.ssh/id_rsa.pub
 
-echo "SSH key has been copied to your clipboard, please got to https://github.com/account/ssh and click \"Add another public key\" and paste the clipboard and press \"Add Key\"."
+sudo ssh-add ./.ssh/id_rsa
+
+echo "$(tput bold)$(tput setaf 4)SSH key has been copied to your clipboard, please got to https://github.com/account/ssh and click \"Add another public key\" and paste the clipboard and press \"Add Key\". $(tput sgr0)"
 
 read done
 
