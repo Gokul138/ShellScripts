@@ -63,7 +63,12 @@ sudo xclip -sel clip < ./.ssh/id_rsa.pub
 
 sudo ssh-add ./.ssh/id_rsa
 
-echo "$(tput bold)$(tput setaf 4)SSH key has been copied to your clipboard, please got to https://github.com/account/ssh and click \"Add another public key\" and paste the clipboard and press \"Add Key\". $(tput sgr0)"
+echo "$(tput bold)$(tput setaf 4)SSH key has been copied to your clipboard"
+echo "$(tput bold) got to https://github.com/account/ssh"
+echo "$(tput bold) click \"Add another public key\" "
+echo "$(tput bold) paste(Ctrl+V or right click) in 'key' box paste there and press \"Add Key\"."
+echo "P.S: no 'Title' needed"
+echo "$(tput setaf 2) Do not Use Ctrl+C now$(tput sgr0)"
 
 read done
 
@@ -73,37 +78,37 @@ echo "$done"
 
 
 echo "installing qt4-dev-tools"
-sudo apt-get install qt4-dev-tools
+sudo apt-get install -q -y qt4-dev-tools
 
 echo "installing freeglut3"
-sudo apt-get install freeglut3
+sudo apt-get install -q -y freeglut3
 
 echo "installing libqt4-dev"
-sudo apt-get install libqt4-dev
+sudo apt-get install -q -y libqt4-dev
 
 echo "installing libqwt5-qt4-dev"
-sudo apt-get install libqwt5-qt4-dev
+sudo apt-get install -q -y libqwt5-qt4-dev
 
 echo "installing libqwt5-qt4"
-sudo apt-get install libqwt5-qt4 
+sudo apt-get install -q -y libqwt5-qt4 
 
 echo "installing libqt4-opengl-dev"
-sudo apt-get install libqt4-opengl-dev 
+sudo apt-get install -q -y libqt4-opengl-dev 
 
 echo "installing libqwt5-qt4"
-sudo apt-get install libdb4.7-dev 
+sudo apt-get install -q -y libdb4.7-dev 
 
 echo "installing libzip-dev"
-sudo apt-get install libzip-dev 
+sudo apt-get install -q -y libzip-dev 
 
 echo "installing libboost1.42-dev"
-sudo apt-get install libboost1.42-dev 
+sudo apt-get install -q -y libboost1.42-dev 
 
 echo "installing python"
-sudo apt-get install python
+sudo apt-get install -q -y python
 
 echo "installing ccache"
-sudo apt-get install ccache
+sudo apt-get install -q -y ccache
 
 
 cd 2013-mini-smart-vehicles/project-template && cp -r * ../"$group" && cd ..
@@ -113,12 +118,12 @@ sudo mkdir /opt/msv/"$group"
 
 cd "$group"/sources/OpenDaVINCI-msv && sudo mkdir build
 
-cmake -DCMAKE_INSTALL_PREFIX=/opt/msv/"$group"
+sudo cmake -DCMAKE_INSTALL_PREFIX=/opt/msv/"$group"
 
-make all
+sudo make all
 
-make test
+sudo make test
 
-make install
+sudo make install
 
 echo "next implementation with demo starting supercomponent and fixing functional checks"
