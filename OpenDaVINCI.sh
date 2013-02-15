@@ -23,21 +23,21 @@ if [[ $boolYN = 'Y' || $boolYN = 'y'  ]]; then
 #other components functions
 
 start_supercomponent (){
- cd /opt/msv/"$group"/
+ cd /opt/msv/"$group"/bin
  ./supercomponent --cid=111
 }
 
 export -f start_supercomponent
 
 start_testsensorboardsender (){
- cd /opt/msv/"$group"/
+ cd /opt/msv/"$group"/bin
  ./testsensorboardsender --cid=111
 }
 
 export -f start_testsensorboardsender
 
 start_sensorboard (){
- cd /opt/msv/"$group"/
+ cd /opt/msv/"$group"/bin
  ./sensorboard --cid=111
 }
 
@@ -54,6 +54,14 @@ gnome-terminal --execute bash -c "start_sensorboard;bash"
 }
 
 export -f start_test # export function start_test
+
+delete_any_existing (){
+cd 
+sudo rm -rf 2013-mini-smart-vehicles
+sudo rm -rf /opt/msv
+}
+
+export -f delete_any_existing
 
 cd 
 
@@ -92,6 +100,9 @@ sudo apt-get -q -y clean
 
 echo "autoremove"
 sudo apt-get -q -y autoremove
+
+echo "deleting any existid files/versions of opendavinci,hesperia on the drive"
+delete_any_existing
 
 echo "$(tput bold)$(tput setaf 4)******READ THE FOLLOWING******$(tput sgr0)"
 echo "generating ssh key"
@@ -156,7 +167,7 @@ echo "installing ccache"
 sudo apt-get install -q -y ccache
 
 
-cd 2013-mini-smart-vehicles/project-template && cp -r * ../"$group" && cd ..
+cd 2013-mini-smart-vehicles/project-template && sudo cp -r * ../"$group" && cd ..
 
 sudo mkdir /opt/msv
 sudo mkdir /opt/msv/"$group"
