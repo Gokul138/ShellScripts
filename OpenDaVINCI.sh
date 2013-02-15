@@ -1,67 +1,73 @@
-# Author Gokul S. Evuri (gokul@evuri.com)
-
+######Author Gokul S. Evuri (gokul@evuri.com)#####
+#!/bin/bash
 echo "$(tput bold)$(tput setaf 4)Hello Welcome, Any errors contact gusevugo@student.gu.se"
 
 echo "$(tput bold)$(tput setaf 4)****Read the Following carefully and do as so for a successful installation****$(tput sgr0)"
 echo "$(tput bold)Enter the following and when asked for confirmation to install any package [Y/N] please press \"Y\" and [ENTER]"
 
 echo "$(tput bold)$(tput setaf 4)Now, enter your group. example:group-1, and press [ENTER] key"
-read group
 
-echo "$(tput bold)$(tput setaf 4)And Elease enter your registered email on git, example:your_email@youremail.com followed by [ENTER] key$(tput sgr0)"
+cd 
+PWD=$(pwd)
 
-read email
+read N_GROUP
+
+export N_GROUP
+
+#echo "$(tput bold)$(tput setaf 4)And Elease enter your registered email on git, example:your_email@youremail.com followed by [ENTER] key$(tput sgr0)"
+
+#read G_EMAIL
 
 #ask user if every thing entered correct or want to enter it again?
-echo "$(tput bold)Have you entered your group name and email correctly? press /"[Y/N]/" and then [ENTER] key" 
-read boolYN
+#echo "$(tput bold)Have you entered your group name and email correctly? press /"[Y/N]/" and then [ENTER] key" 
+echo "$(tput bold)Have you entered your group name correctly? press "[Y/N]" and then [ENTER] key" 
+read BOOL_YN
 
-if [[ $boolYN = 'Y' || $boolYN = 'y'  ]]; then
+if [[ $BOOL_YN = 'Y' || $BOOL_YN = 'y' || $BOOL_YN = '' ]]; then
 
 #use the following functions in new windows
 #super component function
 #other components functions
 
-start_supercomponent (){
- cd /opt/msv/"$group"/bin
+
+START_SUPERCOMPONENT (){
+ cd "/opt/msv/$N_GROUP/bin"
  ./supercomponent --cid=111
 }
 
-export -f start_supercomponent
+export -f START_SUPERCOMPONENT
 
-start_testsensorboardsender (){
- cd /opt/msv/"$group"/bin
+START_TESTSENSORBOARDSENDER (){
+ cd "/opt/msv/$N_GROUP/bin"
  ./testsensorboardsender --cid=111
 }
 
-export -f start_testsensorboardsender
+export -f START_TESTSENSORBOARDSENDER
 
-start_sensorboard (){
- cd /opt/msv/"$group"/bin
+START_SENSORBOARD (){
+ cd "/opt/msv/$N_GROUP/bin"
  ./sensorboard --cid=111
 }
 
-export -f start_sensorboard
+export -f START_SENSORBOARD
 
 #start_other_component (){}
 
 #export -f start_other_component
 
-start_test (){
-gnome-terminal --execute bash -c "start_supercomponent;bash"  #execute bash in new terminal
-gnome-terminal --execute bash -c "start_testsensorboardsender;bash"
-gnome-terminal --execute bash -c "start_sensorboard;bash"
+START_TEST (){
+gnome-terminal --execute bash -c "START_SUPERCOMPONENT;bash"  #execute bash in new terminal
+gnome-terminal --execute bash -c "START_TESTSENSORBOARDSENDER;bash"
+gnome-terminal --execute bash -c "START_SENSORBOARD;bash"
 }
 
-export -f start_test # export function start_test
+#export -f START_TEST # export function start_test
 
-delete_any_existing (){
+DELETE_ANY_EXISTING (){
 cd 
 sudo rm -rf 2013-mini-smart-vehicles
 sudo rm -rf /opt/msv
 }
-
-export -f delete_any_existing
 
 cd 
 
@@ -101,36 +107,44 @@ sudo apt-get -q -y clean
 echo "autoremove"
 sudo apt-get -q -y autoremove
 
+echo "installing emacs"
+sudo apt-get -q -y install emacs
+
+echo "installing gtk packages to solve gtk issues in emacs"
+sudo apt-get -q -y install qtk2-engines-pixbuf
+
 echo "deleting any existid files/versions of opendavinci,hesperia on the drive"
-delete_any_existing
+DELETE_ANY_EXISTING
+
 
 echo "$(tput bold)$(tput setaf 4)******READ THE FOLLOWING******$(tput sgr0)"
 echo "generating ssh key"
 echo "$(tput bold)Just Press [ENTER] key during the next step"
 echo "$(tput bold)If asks for \"Overwrite (y/n)\" press \"Y\" and then [ENTER] key thrice.$(tput sgr0)"
-sudo ssh-keygen -t rsa -C "$email"
+#sudo ssh-keygen -t rsa -C $G_EMAIL
 
-echo "Installing xclip"
-sudo apt-get -q -y install xclip
+#echo "Installing xclip"
+#sudo apt-get -q -y install xclip
+
+#cd
+#sudo xclip -sel clip < /root/.ssh/id_rsa.pub
+#sudo ssh-add /root/.ssh/id_rsa
+
+echo "$(tput bold)$(tput setaf 4)An SSH key containing emacs window will appear, copy the whole thing from that"
+echo "$(tput bold) go to https://github.com/account/ssh"
+echo "$(tput bold) click \"Add another public key\" "
+echo "$(tput bold) paste(Ctrl+V or right click paste) in 'key' box and press \"Add Key\"."
+echo "P.S: No 'Title' needed"
+echo "$(tput bold) when you are done come back here and press [ENTER]key"
 
 cd 
+#sudo emacs /root/.ssh/id_rsa.pub &
 
-sudo xclip -sel clip < ./.ssh/id_rsa.pub
-
-sudo ssh-add ./.ssh/id_rsa
-
-echo "$(tput bold)$(tput setaf 4)SSH key has been copied to your clipboard"
-echo "$(tput bold) got to https://github.com/account/ssh"
-echo "$(tput bold) click \"Add another public key\" "
-echo "$(tput bold) paste(Ctrl+V or right click) in 'key' box paste there and press \"Add Key\"."
-echo "P.S: no 'Title' needed"
-echo "$(tput setaf 2) Do not Use Ctrl+C now$(tput sgr0)"
-
-read done
+#read DONE
 
 git clone https://github.com/se-research/2013-mini-smart-vehicles.git
 
-echo "$done"
+#echo $DONE
 
 
 echo "installing qt4-dev-tools"
@@ -167,15 +181,15 @@ echo "installing ccache"
 sudo apt-get install -q -y ccache
 
 
-cd 2013-mini-smart-vehicles/project-template && sudo cp -r * ../"$group" && cd ..
+cd 2013-mini-smart-vehicles/project-template && sudo cp -r * ../"$N_GROUP" && cd ..
 
 sudo mkdir /opt/msv
-sudo mkdir /opt/msv/"$group"
+sudo mkdir /opt/msv/$N_GROUP
 
-cd "$group"/sources/OpenDaVINCI-msv && sudo mkdir build
+cd "$N_GROUP"/sources/OpenDaVINCI-msv && sudo mkdir build
 
 echo "Generating cmake files"
-sudo cmake -DCMAKE_INSTALL_PREFIX=/opt/msv/"$group"/
+sudo cmake -DCMAKE_INSTALL_PREFIX=/opt/msv/"$N_GROUP"/
 
 echo "make all"
 sudo make all
@@ -188,7 +202,7 @@ sudo make install
 
 #echo "next implementation with demo starting supercomponent and fixing functional checks"
 
-start_test
+START_TEST
 
 else echo "please run the script again";
 
