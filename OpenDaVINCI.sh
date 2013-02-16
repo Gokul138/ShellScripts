@@ -92,14 +92,22 @@ sudo apt-get -q -y clean
 echo "installing python-software-properties"
 sudo apt-get -q -y install python-software-properties
 
+
+
+# add a case statement to check if it is available, if not install git core
 echo "adding git-core repository"
 sudo add-apt-repository -q -y ppa:git-core/ppa
+
+
 
 echo "updating local repo"
 sudo apt-get -q -y update
 
 echo "installing git"
 sudo apt-get -q -y install git
+
+echo "installing git-core"
+sudo apt-get -q -y install git-core
 
 echo "cleaning"
 sudo apt-get -q -y clean
