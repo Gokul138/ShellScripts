@@ -210,6 +210,19 @@ sudo make install
 
 #echo "next implementation with demo starting supercomponent and fixing functional checks"
 
+
+INSTALL_HESPERIALIGHT (){
+ sudo apt-get install freeglut3 libqt4-dev libqwt5-qt4-dev libqwt5-qt4 libqt4-opengl-dev libdb4.7-dev libzip-dev libboost1.42-dev python ccache libdb-dev
+
+cd
+
+cd 2013-mini-smart-vehicles/$N_GROUP/sources/hesperia-light/
+
+./build.sh
+
+}
+
+
 START_TEST
 
 else echo "please run the script again";
